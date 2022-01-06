@@ -6,7 +6,7 @@ import (
 )
 
 func Router() *mux.Router {
-	r := mux.NewRouter()
+	r := mux.NewRouter().StrictSlash(true)
 
 	ch := handlers.NewConstructionHandler()
 
