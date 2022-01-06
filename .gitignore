@@ -1,0 +1,8 @@
+build/
+.idea/
+*.env
+*.crt
+*.key
+icons/
+
+certs/
