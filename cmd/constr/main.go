@@ -3,6 +3,9 @@ package main
 import (
 	"github.com/Lucasdox/constr-backend/internal/adapters/http/router"
 	"github.com/Lucasdox/constr-backend/internal/adapters/server"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"log"
@@ -13,6 +16,19 @@ func main() {
 	setupGlobalLogger()
 	l := zap.L()
 	l.Info("Starting application")
+
+	m, err := migrate.New(
+		"file://data/migrations",
+		"postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable",
+	)
+
+	if err != nil {
+		l.Fatal("error connecting migrate to database", zap.Error(err))
+	}
+
+	if err := m.Up(); err != nil {
+		l.Fatal("error running migrations", zap.Error(err))
+	}
 
 	r := router.Router()
 

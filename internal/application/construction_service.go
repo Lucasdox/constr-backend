@@ -2,19 +2,19 @@ package application
 
 import (
 	"context"
-	"github.com/Lucasdox/constr-backend/internal/domain"
+	"github.com/Lucasdox/constr-backend/internal/application/query"
 	"github.com/google/uuid"
 )
 
 type ConstructionService interface {
-	ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []domain.Construction, err error)
+	ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []query.ListConstructionsFromCompanyQueryResponse, err error)
 }
 
 type ConstructionServiceImpl struct {
 
 }
 
-func (c ConstructionServiceImpl) ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []domain.Construction, err error) {
+func (c ConstructionServiceImpl) ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []query.ListConstructionsFromCompanyQueryResponse, err error) {
 	panic("implement me")
 }
 

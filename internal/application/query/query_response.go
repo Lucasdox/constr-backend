@@ -1,7 +1,10 @@
 package query
 
-import "github.com/Lucasdox/constr-backend/internal/domain"
+import "github.com/google/uuid"
 
 type ListConstructionsFromCompanyQueryResponse struct {
-	Constructions []domain.Construction `json:"constructions"`
+	Constructions []struct{
+		Id uuid.UUID
+		Name string
+	} `json:"constructions"`
 }
