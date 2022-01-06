@@ -9,3 +9,15 @@ import (
 type ConstructionService interface {
 	ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []domain.Construction, err error)
 }
+
+type ConstructionServiceImpl struct {
+
+}
+
+func (c ConstructionServiceImpl) ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []domain.Construction, err error) {
+	panic("implement me")
+}
+
+func NewConstructionService() ConstructionService {
+	return &ConstructionServiceImpl{}
+}

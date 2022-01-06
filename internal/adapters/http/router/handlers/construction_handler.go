@@ -12,3 +12,6 @@ func (h *ConstructionHandler) ListConstruction(w http.ResponseWriter, r *http.Re
 
 }
 
+func NewConstructionHandler() *ConstructionHandler {
+	return &ConstructionHandler{}
+}
