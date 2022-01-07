@@ -17,12 +17,12 @@ func Router(db *database.DBImpl) *mux.Router {
 	conHandler := handlers.NewConstructionHandler(constructionRepository)
 	cHandler := handlers.NewCompanyHandler(companyRepository)
 
-	con := r.PathPrefix("/constructions").Subrouter()
-	con.Path("/").Methods(http.MethodGet).HandlerFunc(conHandler.ListConstruction)
-
 	c := r.PathPrefix("/companies").Subrouter()
-	c.Methods(http.MethodGet).HandlerFunc(cHandler.ListCompanies)
+	c.Path("").Methods(http.MethodGet).HandlerFunc(cHandler.ListCompanies)
 	c.Path("").Methods(http.MethodPost).HandlerFunc(cHandler.CreateCompany)
+
+	// /companies/{id}/constructions
+	c.Path("/{id}/constructions").Methods(http.MethodGet).HandlerFunc(conHandler.ListConstruction)
 
 	return r
 }

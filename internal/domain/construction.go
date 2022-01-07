@@ -9,12 +9,13 @@ type Construction struct {
 	Id uuid.UUID
 	CompanyId uuid.UUID
 	Name string
-	CreatedAt time.Time
 	InitialDate time.Time
 	DueDate time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type ConstructionRepository interface {
-	List(companyId uuid.UUID) ([]Construction, error)
+	ListByCompanyId(companyId uuid.UUID) ([]Construction, error)
 	Save(con Construction) error
 }

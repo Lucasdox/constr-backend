@@ -9,19 +9,19 @@ import (
 )
 
 type ConstructionService interface {
-	List(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error)
-	Insert(context.Context, command.CreateConstructionCommand) error
+	ListByCompanyId(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error)
+	Create(context.Context, command.CreateConstructionCommand) error
 }
 
 type ConstructionServiceImpl struct {
 	repository domain.ConstructionRepository
 }
 
-func (c *ConstructionServiceImpl) List(ctx context.Context, companyId uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error) {
+func (c *ConstructionServiceImpl) ListByCompanyId(ctx context.Context, companyId uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error) {
 	panic("implement me")
 }
 
-func (c *ConstructionServiceImpl) Insert(ctx context.Context, command command.CreateConstructionCommand) error {
+func (c *ConstructionServiceImpl) Create(ctx context.Context, command command.CreateConstructionCommand) error {
 	panic("implement me")
 }
 
