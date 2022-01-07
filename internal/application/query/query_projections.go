@@ -1,12 +1,17 @@
 package query
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+	"time"
+)
 
 type ListConstructionsFromCompanyQueryProjection []ConstructionByCompanyId
 
 type ConstructionByCompanyId struct {
-	Id   uuid.UUID `json:"id,omitempty"`
-	Name string    `json:"name,omitempty"`
+	Id   uuid.UUID
+	Name string
+	InitialDate time.Time
+	DueDate time.Time
 }
 
 type ListCompanyQueryProjection []Company
