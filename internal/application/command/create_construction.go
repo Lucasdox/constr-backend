@@ -6,8 +6,8 @@ import (
 )
 
 type CreateConstructionCommand struct {
-	CompanyId uuid.UUID
-	ConstructionName string
-	InitialDate time.Time
-	DueDate time.Time
+	CompanyId        uuid.UUID `json:"company_id,omitempty"`
+	ConstructionName string    `json:"construction_name,omitempty"`
+	InitialDate      time.Time `json:"initial_date"`
+	DueDate          time.Time `json:"due_date"`
 }
