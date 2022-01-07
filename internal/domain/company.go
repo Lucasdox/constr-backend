@@ -11,7 +11,7 @@ type Company struct {
 }
 
 type CompanyRepository interface {
-	Insert(id uuid.UUID, name string) error
+	Save(company Company) error
 }
 
 func NewCompany(name string) Company{

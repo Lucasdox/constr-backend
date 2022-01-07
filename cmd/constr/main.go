@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Lucasdox/constr-backend/internal/adapters/database"
 	"github.com/Lucasdox/constr-backend/internal/adapters/http/router"
 	"github.com/Lucasdox/constr-backend/internal/adapters/server"
 	"github.com/golang-migrate/migrate/v4"
@@ -30,7 +31,9 @@ func main() {
 		l.Fatal("error running migrations", zap.Error(err))
 	}
 
-	r := router.Router()
+	db := database.NewPostgresDatabase()
+
+	r := router.Router(db)
 
 	server.StartHttpServer(r)
 }

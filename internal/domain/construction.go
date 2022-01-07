@@ -16,5 +16,5 @@ type Construction struct {
 
 type ConstructionRepository interface {
 	List(companyId uuid.UUID) ([]Construction, error)
-	Insert(companyId uuid.UUID, name string, initialDate time.Time, dueDate time.Time) error
+	Save(con Construction) error
 }
