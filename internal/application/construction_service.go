@@ -2,22 +2,29 @@ package application
 
 import (
 	"context"
+	"github.com/Lucasdox/constr-backend/internal/application/command"
 	"github.com/Lucasdox/constr-backend/internal/application/query"
+	"github.com/Lucasdox/constr-backend/internal/domain"
 	"github.com/google/uuid"
 )
 
 type ConstructionService interface {
-	ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []query.ListConstructionsFromCompanyQueryResponse, err error)
+	List(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryResponse, error)
+	Insert(context.Context, command.InsertConstructionCommand) error
 }
 
 type ConstructionServiceImpl struct {
-
+	repository domain.ConstructionRepository
 }
 
-func (c ConstructionServiceImpl) ListConstructions(ctx context.Context, companyId uuid.UUID) (cntrs []query.ListConstructionsFromCompanyQueryResponse, err error) {
+func (c *ConstructionServiceImpl) List(ctx context.Context, companyId uuid.UUID) ([]query.ListConstructionsFromCompanyQueryResponse, error) {
 	panic("implement me")
 }
 
-func NewConstructionService() ConstructionService {
-	return &ConstructionServiceImpl{}
+func (c *ConstructionServiceImpl) Insert(ctx context.Context, command command.InsertConstructionCommand) error {
+	panic("implement me")
+}
+
+func NewConstructionService(r domain.ConstructionRepository) ConstructionService {
+	return &ConstructionServiceImpl{repository: r}
 }
