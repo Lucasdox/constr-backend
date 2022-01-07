@@ -10,7 +10,7 @@ import (
 )
 
 type CompanyService interface {
-	ListCompanies(context.Context) ([]query.ListCompanyQueryResponse, error)
+	ListCompanies(context.Context) (*query.ListCompanyQueryProjection, error)
 	CreateCompanyAndPersist(context.Context, command.CreateCompanyCommand) (*uuid.UUID, error)
 }
 
@@ -19,8 +19,22 @@ type CompanyServiceImpl struct {
 	repository domain.CompanyRepository
 }
 
-func (s *CompanyServiceImpl) ListCompanies(ctx context.Context) ([]query.ListCompanyQueryResponse, error) {
-	panic("implement me")
+func (s *CompanyServiceImpl) ListCompanies(ctx context.Context) (*query.ListCompanyQueryProjection, error) {
+	var queryProj query.ListCompanyQueryProjection
+	slc, err := s.repository.List()
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, c := range slc {
+		var cProj query.Company
+		cProj.Name = c.Name
+		cProj.Id = c.Id
+		queryProj = append(queryProj, cProj)
+	}
+
+	return &queryProj, nil
 }
 
 

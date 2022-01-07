@@ -15,11 +15,21 @@ type CompanyHandler struct {
 }
 
 func (h *CompanyHandler) ListCompanies(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application-json")
 
+	slc, err := h.service.ListCompanies(r.Context())
+
+	if err != nil {
+		http.Error(w, "Error searching for companies", http.StatusInternalServerError)
+	}
+
+	res, _ := json.Marshal(slc)
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
 }
 
 func (h *CompanyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application-json")
 	defer r.Body.Close()
 	var cmd command.CreateCompanyCommand
 

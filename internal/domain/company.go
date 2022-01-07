@@ -12,6 +12,7 @@ type Company struct {
 
 type CompanyRepository interface {
 	Save(company Company) error
+	List() ([]Company, error)
 }
 
 func NewCompany(name string) Company{

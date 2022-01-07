@@ -9,7 +9,7 @@ import (
 )
 
 type ConstructionService interface {
-	List(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryResponse, error)
+	List(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error)
 	Insert(context.Context, command.CreateConstructionCommand) error
 }
 
@@ -17,7 +17,7 @@ type ConstructionServiceImpl struct {
 	repository domain.ConstructionRepository
 }
 
-func (c *ConstructionServiceImpl) List(ctx context.Context, companyId uuid.UUID) ([]query.ListConstructionsFromCompanyQueryResponse, error) {
+func (c *ConstructionServiceImpl) List(ctx context.Context, companyId uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error) {
 	panic("implement me")
 }
 
