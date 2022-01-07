@@ -32,7 +32,7 @@ func (db *DBImpl) CreatePool(cfg *DBConfig) error {
 	l := zap.L()
 	var connString string
 	if cfg.Insecure {
-		connString = fmt.Sprintf("postgresql://%s:@%s:%d/%s?sslmode=disable", cfg.Username, cfg.Hostname, cfg.Port, cfg.Database)
+		connString = fmt.Sprintf("postgresql://%s:%s@%s:%d/%s?sslmode=disable", cfg.Username, cfg.Password, cfg.Hostname, cfg.Port, cfg.Database)
 	} else {
 		connString = fmt.Sprintf(
 			"postgresql://%s:@%s:%d/%s?sslmode=verify-full&sslrootcert=%s&sslcert=%s&sslkey=%s&pool_max_conns=%d",
@@ -44,14 +44,14 @@ func (db *DBImpl) CreatePool(cfg *DBConfig) error {
 	config, err := pgxpool.ParseConfig(connString)
 
 	if err != nil {
-		l.Error("error configuring the database: ", zap.Error(err))
+		l.Fatal("error configuring the database: ", zap.Error(err))
 		return err
 	}
 
 	// Create a connection pool to the "bnko" database.
 	db.pool, err = pgxpool.ConnectConfig(context.Background(), config)
 	if err != nil {
-		l.Error("error connecting to the database: ", zap.Error(err))
+		l.Fatal("error connecting to the database: ", zap.Error(err))
 		return err
 	}
 	return nil

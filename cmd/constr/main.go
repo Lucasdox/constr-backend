@@ -27,7 +27,7 @@ func main() {
 		l.Fatal("error connecting migrate to database", zap.Error(err))
 	}
 
-	if err := m.Up(); err != nil {
+	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 		l.Fatal("error running migrations", zap.Error(err))
 	}
 

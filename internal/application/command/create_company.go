@@ -1,5 +1,5 @@
 package command
 
 type CreateCompanyCommand struct {
-	CompanyName string
+	CompanyName string `json:"name"`
 }

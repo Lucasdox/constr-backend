@@ -21,7 +21,7 @@ func Router(db *database.DBImpl) *mux.Router {
 	con.Path("/").Methods(http.MethodGet).HandlerFunc(conHandler.ListConstruction)
 
 	c := r.PathPrefix("/companies").Subrouter()
-	c.Path("/").Methods(http.MethodPost).HandlerFunc(cHandler.)
+	c.Path("").Methods(http.MethodPost).HandlerFunc(cHandler.CreateCompany)
 
 	return r
 }

@@ -14,6 +14,10 @@ func (h *ConstructionHandler) ListConstruction(w http.ResponseWriter, r *http.Re
 
 }
 
+func (h *ConstructionHandler) CreateConstruction(w http.ResponseWriter, r *http.Request) {
+	
+}
+
 func NewConstructionHandler(r domain.ConstructionRepository) *ConstructionHandler {
 	s := application.NewConstructionService(r)
 	return &ConstructionHandler{Service: s}
