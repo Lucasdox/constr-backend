@@ -10,7 +10,7 @@ import (
 
 type ConstructionService interface {
 	List(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryResponse, error)
-	Insert(context.Context, command.InsertConstructionCommand) error
+	Insert(context.Context, command.CreateConstructionCommand) error
 }
 
 type ConstructionServiceImpl struct {
@@ -21,7 +21,7 @@ func (c *ConstructionServiceImpl) List(ctx context.Context, companyId uuid.UUID)
 	panic("implement me")
 }
 
-func (c *ConstructionServiceImpl) Insert(ctx context.Context, command command.InsertConstructionCommand) error {
+func (c *ConstructionServiceImpl) Insert(ctx context.Context, command command.CreateConstructionCommand) error {
 	panic("implement me")
 }
 

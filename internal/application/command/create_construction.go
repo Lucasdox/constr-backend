@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type InsertConstructionCommand struct {
+type CreateConstructionCommand struct {
 	CompanyId uuid.UUID
 	ConstructionName string
 	InitialDate time.Time
