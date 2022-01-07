@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+const (
+	SELECT_FIELDS = `id, name, initial_date, due_date, created_at, updated_at`
+)
+
 type ConstructionRepositoryImpl struct {
 	db database.DBImpl
 }
