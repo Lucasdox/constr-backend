@@ -18,6 +18,8 @@ type ConstructionRepositoryImpl struct {
 }
 
 func (r ConstructionRepositoryImpl) ListByCompanyId(companyId uuid.UUID) ([]domain.Construction, error) {
+	r.log.Info("Fetching constructions from repository")
+
 	var slc []domain.Construction
 	rows, err := r.db.Query(SELECT_CONSTRUCTION_BY_COMPANY_ID, companyId)
 	defer rows.Close()

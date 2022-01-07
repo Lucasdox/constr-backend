@@ -8,10 +8,10 @@ import (
 type ListConstructionsFromCompanyQueryProjection []ConstructionByCompanyId
 
 type ConstructionByCompanyId struct {
-	Id   uuid.UUID
-	Name string
-	InitialDate time.Time
-	DueDate time.Time
+	Id          uuid.UUID `json:"id,omitempty"`
+	Name        string    `json:"name,omitempty"`
+	InitialDate time.Time `json:"initial_date"`
+	DueDate     time.Time `json:"due_date"`
 }
 
 type ListCompanyQueryProjection []Company

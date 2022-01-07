@@ -10,7 +10,7 @@ import (
 )
 
 type ConstructionService interface {
-	ListByCompanyId(context.Context, uuid.UUID) ([]query.ListConstructionsFromCompanyQueryProjection, error)
+	ListByCompanyId(context.Context, uuid.UUID) (query.ListConstructionsFromCompanyQueryProjection, error)
 	Create(context.Context, command.CreateConstructionCommand) error
 }
 
@@ -20,7 +20,7 @@ type ConstructionServiceImpl struct {
 }
 
 func (s *ConstructionServiceImpl) ListByCompanyId(ctx context.Context, companyId uuid.UUID) (query.ListConstructionsFromCompanyQueryProjection, error) {
-	var queryProj query.ListConstructionsFromCompanyQueryProjection
+	queryProj := query.ListConstructionsFromCompanyQueryProjection{}
 	slc, err := s.repository.ListByCompanyId(companyId)
 
 	if err != nil {
@@ -31,8 +31,15 @@ func (s *ConstructionServiceImpl) ListByCompanyId(ctx context.Context, companyId
 	for _, c := range slc {
 		var con query.ConstructionByCompanyId
 		con.Id = c.Id
-		queryProj = append(queryProj, )
+		con.Name = c.Name
+		con.InitialDate = c.InitialDate
+		con.DueDate = c.DueDate
+		queryProj = append(queryProj, con)
 	}
+
+	s.log.Info("ListByCompanyId success")
+
+	return queryProj, nil
 }
 
 func (s *ConstructionServiceImpl) Create(ctx context.Context, cmd command.CreateConstructionCommand) error {
