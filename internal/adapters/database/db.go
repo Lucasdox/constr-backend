@@ -10,11 +10,11 @@ import (
 )
 
 type DBImpl struct {
-	dbPool DbPool
+	pool DbPool
 }
 
 type DBConfig struct {
-	Username, Hostname, Database, CACert, ClientCert, SSLKey string
+	Username, Hostname, Database, CACert, ClientCert, SSLKey, Password string
 	Port, PoolSize               int
 	Insecure                     bool
 }
@@ -49,10 +49,52 @@ func (db *DBImpl) CreatePool(cfg *DBConfig) error {
 	}
 
 	// Create a connection pool to the "bnko" database.
-	db.dbPool, err = pgxpool.ConnectConfig(context.Background(), config)
+	db.pool, err = pgxpool.ConnectConfig(context.Background(), config)
 	if err != nil {
 		l.Error("error connecting to the database: ", zap.Error(err))
 		return err
 	}
 	return nil
+}
+
+func (d *DBImpl) Close() {
+	d.pool.Close()
+}
+
+func (d *DBImpl) Query(sql string, params ...interface{}) (pgx.Rows, error) {
+	return d.pool.Query(context.Background(), sql, params...)
+}
+
+// QueryRow - to fetch at most one row.
+func (d *DBImpl) QueryRow(sql string, params ...interface{}) pgx.Row {
+	row := d.pool.QueryRow(context.Background(), sql, params...)
+	return row
+}
+
+func (d *DBImpl) Exec(sql string, params ...interface{}) (int64, error) {
+	l := zap.L()
+	exec, err := d.pool.Exec(context.Background(), sql, params...)
+
+	if err != nil {
+		l.Error("error when executing sql command", zap.Error(err))
+		return 0, err
+	}
+	return exec.RowsAffected(), nil
+}
+
+func NewPostgresDatabase() *DBImpl {
+	db := &DBImpl{}
+
+	dbCfg := &DBConfig{
+		Username:   "postgres",
+		Hostname:   "0.0.0.0",
+		Database:   "postgres",
+		Port:       5432,
+		PoolSize:   4,
+		Insecure:   true,
+		Password: "postgres",
+	}
+
+	db.CreatePool(dbCfg)
+	return db
 }
