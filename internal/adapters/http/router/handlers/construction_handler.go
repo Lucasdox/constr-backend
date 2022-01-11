@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"github.com/Lucasdox/constr-backend/internal/application"
+	"github.com/Lucasdox/constr-backend/internal/application/command"
 	"github.com/Lucasdox/constr-backend/internal/domain"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
@@ -33,7 +34,34 @@ func (h *ConstructionHandler) ListConstruction(w http.ResponseWriter, r *http.Re
 }
 
 func (h *ConstructionHandler) CreateConstruction(w http.ResponseWriter, r *http.Request) {
-	
+	vars := mux.Vars(r)
+	id := vars["id"]
+	companyId, err := uuid.Parse(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	var cmd command.CreateConstructionCommand
+	dec := json.NewDecoder(r.Body)
+	dec.DisallowUnknownFields()
+
+	err = dec.Decode(&cmd)
+	if err != nil {
+		parseIncomingJsonError(err, w)
+		return
+	}
+	cmd.CompanyId = companyId
+
+	idP, err := h.service.Create(r.Context(), cmd)
+
+	ctrId := *idP
+
+	if err != nil {
+		http.Error(w, "Error creating construction", http.StatusInternalServerError)
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Location", ctrId.String())
 }
 
 func NewConstructionHandler(r domain.ConstructionRepository) *ConstructionHandler {
